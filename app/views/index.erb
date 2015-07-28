@@ -1,0 +1,42 @@
+<h1>Deaf Aunty</h1>
+
+<p>Say something to Aunty</p>
+
+<form id="aunty" action="/aunty" method="post">
+  <input type="text" name="user_input">
+  <input type="submit" value="Say It!">
+</form>
+
+<p>URL parameters:</p>
+<%= params %>
+
+<script>
+  $(document).ready(function(){
+
+    $('#aunty').submit(function(event){
+      event.preventDefault();
+      var self = $(this);
+      $.ajax({
+        method: self.attr("method"),
+        url: self.attr("action"),
+        data: self.serialize(),
+        dataType: "json"
+      })
+      .done(function(response){
+        $("#yellow").text("Answer: " + response["answer"]);
+        if(response["test"] === true){
+          $("#yellow").append("<span>Yes, Noisy!</span>")
+        }
+        // $("#yellow").animate({
+        //   left: "+=50",
+        //   height: "toggle"
+        // }, 2000, function() {
+        //   // Animation complete.
+        // });
+      })
+    });
+
+});
+
+
+</script>
